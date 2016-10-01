@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MAD_HA1_2</string>
+    <string name="search_hint">search hint</string>
+    <string name="intro_message">intro</string>
+</resources>
