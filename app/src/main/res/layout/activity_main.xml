@@ -13,7 +13,14 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
     </android.support.v7.widget.Toolbar>
-
+    <TextView
+        android:id="@+id/selectedContact"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dip"
+        android:textSize="16dip"
+        android:textStyle="bold"
+        android:text="@string/nothing_selected_yet"/>
     <!-- List View -->
     <ListView
         android:id="@+id/list_view"

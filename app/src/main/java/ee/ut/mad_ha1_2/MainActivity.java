@@ -4,19 +4,10 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /*
  * Initial code from http://www.androidhive.info/2012/09/android-adding-search-functionality-to-listview/
@@ -27,15 +18,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "Rav";
     public static final int CONTACT_QUERY_LOADER = 0;
     public static final String QUERY_KEY = "query";
-    // List view
-    private ListView lv;
-
-    // Listview Adapter
-    ArrayAdapter<String> adapter;
-
-
-    // ArrayList for Listview
-    ArrayList<HashMap<String, String>> productList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,21 +28,6 @@ public class MainActivity extends AppCompatActivity {
         if (getIntent() != null) {
             handleIntent(getIntent());
         }
-
-//        exampleList();
-        lv = (ListView) findViewById(R.id.list_view);
-
-
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String s = lv.getItemAtPosition(position).toString();
-                Log.v(TAG, s);
-
-            }
-        });
-
     }
 
     @Override
@@ -86,41 +53,14 @@ public class MainActivity extends AppCompatActivity {
             // Start the loader with the new query, and an object that will handle all callbacks.
             getLoaderManager().restartLoader(CONTACT_QUERY_LOADER, bundle, loaderCallbacks);
         }
-    }
+        if (Intent.ACTION_MAIN.equals(intent.getAction())) {
+            Bundle bundle = new Bundle();
+            bundle.putString(QUERY_KEY, "");
 
-    private void exampleList() {
-        // Listview Data
-        final String products[] = {"Dell Inspiron", "HTC One X", "HTC Wildfire S", "HTC Sense", "HTC Sensation XE",
-                "iPhone 4S", "Samsung Galaxy Note 800", "A1", "A2", "A3",
-                "Samsung Galaxy S3", "MacBook Air", "Mac Mini", "MacBook Pro"};
+            ContactablesLoaderCallbacks loaderCallbacks = new ContactablesLoaderCallbacks(this);
 
-
-        lv = (ListView) findViewById(R.id.list_view);
-
-        // Adding items to listview
-        adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.product_name, products);
-    }
-
-    public boolean OLDonCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.toolmenu, menu);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Log.v(TAG, query);
-                MainActivity.this.adapter.getFilter().filter(query);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                Log.v(TAG, newText);
-                MainActivity.this.adapter.getFilter().filter(newText);
-                return true;
-            }
-        });
-        return true;
+            getLoaderManager().restartLoader(CONTACT_QUERY_LOADER, bundle, loaderCallbacks);
+        }
     }
 
     @Override

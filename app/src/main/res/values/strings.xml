@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">MAD_HA1_2</string>
-    <string name="search_hint">search hint</string>
-    <string name="intro_message">intro</string>
+    <string name="app_name">Contacts</string>
+    <string name="search_hint">Enter part of contact name</string>
+    <string name="contacts">Contacts</string>
+    <string name="search">Search</string>
+    <string name="nothing_selected_yet">Nothing selected currently</string>
 </resources>

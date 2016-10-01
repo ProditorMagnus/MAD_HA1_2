@@ -17,9 +17,12 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +51,7 @@ public class ContactablesLoaderCallbacks implements LoaderManager.LoaderCallback
         // display name, email address and phone number.  In this case, the query was extracted
         // from an incoming intent in the handleIntent() method, via the
         // intent.getStringExtra() method.
-
+        Log.v(TAG, "loader created");
         // BEGIN_INCLUDE(uri_with_query)
         String query = args.getString(QUERY_KEY);
 //        Uri uri = Uri.withAppendedPath(
@@ -64,7 +67,7 @@ public class ContactablesLoaderCallbacks implements LoaderManager.LoaderCallback
         String selection = CommonDataKinds.Contactables.HAS_PHONE_NUMBER + " = " + 1;
         selection = CommonDataKinds.Contactables.DISPLAY_NAME + " LIKE ?";
 
-        String[] selectionArgs = {"%"+query+"%"};
+        String[] selectionArgs = {"%" + query + "%"};
 
         // Sort results such that rows for the same contact stay together.
         String sortBy = CommonDataKinds.Contactables.LOOKUP_KEY;
@@ -81,22 +84,12 @@ public class ContactablesLoaderCallbacks implements LoaderManager.LoaderCallback
 
     @Override
     public void onLoadFinished(Loader<Cursor> arg0, Cursor cursor) {
-//        TextView tv = (TextView) ((Activity) mContext).findViewById(R.id.sample_output);
-//        if (tv == null) {
-//            Log.e(TAG, "TextView is null?!");
-//        } else if (mContext == null) {
-//            Log.e(TAG, "Context is null?");
-//        } else {
-//            Log.e(TAG, "Nothing is null?!");
-//        }
-//
-//        // Reset text in case of a previous query
-//        tv.setText(mContext.getText(R.string.intro_message) + "\n\n");
-        ListView lv = (ListView) ((Activity)mContext).findViewById(R.id.list_view);
+        final ListView lv = (ListView) ((Activity) mContext).findViewById(R.id.list_view);
         List<String> contactList = new ArrayList<>();
         Log.v(TAG, "load finished");
         if (cursor.getCount() == 0) {
             Log.v(TAG, "cursor count 0");
+            Toast.makeText(mContext, "No results.", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -140,14 +133,24 @@ public class ContactablesLoaderCallbacks implements LoaderManager.LoaderCallback
             // Behold, the firehose!
             for (String column : cursor.getColumnNames()) {
                 String string = cursor.getString(cursor.getColumnIndex(column));
-                if(string==null) continue;
+                if (string == null) continue;
                 Log.d(TAG, column + column + ": " +
                         string + "\n");
             }
         } while (cursor.moveToNext());
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, R.layout.list_item, R.id.product_name, contactList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, R.layout.list_item, R.id.product_name, contactList);
         lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String s = lv.getItemAtPosition(position).toString();
+                TextView textView = (TextView) ((Activity) mContext).findViewById(R.id.selectedContact);
+                textView.setText(s);
+                Log.v(TAG, s);
+
+            }
+        });
     }
 
     @Override
