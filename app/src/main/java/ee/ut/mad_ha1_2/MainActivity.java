@@ -1,13 +1,20 @@
 package ee.ut.mad_ha1_2;
 
 import android.app.SearchManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /*
  * Initial code from http://www.androidhive.info/2012/09/android-adding-search-functionality-to-listview/
@@ -18,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "Rav";
     public static final int CONTACT_QUERY_LOADER = 0;
     public static final String QUERY_KEY = "query";
+    public static final String SELECTED_NAME = "selected_name";
+    private boolean mSearchSelected = false;
+    public static final String SEARCH_SELECTED = "search_selected";
+    private String mSearchText = "";
+    public static final String SEARCH_TEXT = "search_text";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,6 +40,22 @@ public class MainActivity extends AppCompatActivity {
         if (getIntent() != null) {
             handleIntent(getIntent());
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(SELECTED_NAME, ((TextView) findViewById(R.id.selectedContact)).getText().toString());
+        outState.putString(SEARCH_TEXT, mSearchText);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        ((TextView) findViewById(R.id.selectedContact)).setText(savedInstanceState.getString(SELECTED_NAME));
+        Log.v(TAG, "changing textview back to "+savedInstanceState.getString(SELECTED_NAME));
+        mSearchText = savedInstanceState.getString(SEARCH_TEXT);
+
     }
 
     @Override
@@ -73,9 +101,24 @@ public class MainActivity extends AppCompatActivity {
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
                 (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setQuery(mSearchText, false);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mSearchText = "";
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mSearchText = newText;
+                return false;
+            }
+        });
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
 
         return true;
     }
+
 }
