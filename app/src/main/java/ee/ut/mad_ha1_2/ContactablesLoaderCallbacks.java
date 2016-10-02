@@ -56,7 +56,8 @@ public class ContactablesLoaderCallbacks implements LoaderManager.LoaderCallback
         String query = args.getString(QUERY_KEY);
 //        Uri uri = Uri.withAppendedPath(
 //                CommonDataKinds.Contactables.CONTENT_FILTER_URI, query);
-        Uri uri = Uri.withAppendedPath(ContactsContract.Data.CONTENT_URI, "contactables");
+//        Uri uri = Uri.withAppendedPath(ContactsContract.Data.CONTENT_URI, "contactables");
+        Uri uri = ContactsContract.Data.CONTENT_URI;
 //        uri = Uri.withAppendedPath(uri, "filter");
 //        uri = Uri.withAppendedPath(uri, query);
         // END_INCLUDE(uri_with_query)
