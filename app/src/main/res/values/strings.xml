@@ -4,4 +4,11 @@
     <string name="contacts">Contacts</string>
     <string name="search">Search</string>
     <string name="nothing_selected_yet">Nothing selected currently</string>
+    <string name="name">Name: </string>
+    <string name="no_name_available">No name available</string>
+    <string name="phone">Phone:</string>
+    <string name="no_number">No phone number available</string>
+    <string name="email">Email:</string>
+    <string name="no_email">No email available</string>
+    <string name="send_email">Email</string>
 </resources>
