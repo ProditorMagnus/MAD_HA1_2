@@ -10,7 +10,9 @@
     <TextView android:id="@+id/product_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="#4F81BD"
         android:padding="10dip"
+        android:textColor="#FFF"
         android:textSize="16dip"
         android:textStyle="bold"/>
 

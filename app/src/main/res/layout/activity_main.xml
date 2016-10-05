@@ -8,26 +8,34 @@
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="#4B8F3B"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="#FFF">
     </android.support.v7.widget.Toolbar>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="4dp"
+        android:background="#FFF" />
     <TextView
         android:id="@+id/selectedContact"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="#D26E00"
         android:onClick="selectedContactClicked"
         android:padding="10dip"
         android:text="@string/nothing_selected_yet"
+        android:textColor="#FFF"
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <View
         android:id="@+id/primer_divisor"
         android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="#000" />
+        android:layout_height="12dp"
+        android:background="#FFF" />
     <!-- List View -->
     <ListView
         android:id="@+id/list_view"

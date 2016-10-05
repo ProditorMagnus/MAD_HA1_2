@@ -23,9 +23,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int CONTACT_QUERY_LOADER = 0;
     public static final String QUERY_KEY = "query";
     public static final String SELECTED_NAME = "selected_name";
-    public static final String SEARCH_SELECTED = "search_selected";
     public static final String SEARCH_TEXT = "search_text";
-    private boolean mSearchSelected = false;
     private String mSearchText = "";
 
     @Override

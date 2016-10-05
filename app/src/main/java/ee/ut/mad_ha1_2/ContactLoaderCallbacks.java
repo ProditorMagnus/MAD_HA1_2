@@ -20,7 +20,6 @@ import android.provider.ContactsContract.CommonDataKinds;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,8 +87,10 @@ public class ContactLoaderCallbacks implements LoaderManager.LoaderCallbacks<Cur
         Log.v(TAG, "load finished");
         if (cursor.getCount() == 0) {
             Log.v(TAG, "cursor count 0");
-            Toast.makeText(mContext, "No results.", Toast.LENGTH_LONG).show();
-            throw new IllegalStateException("this should never happen as this should only be called with valid input");
+            return;
+//            Toast.makeText(mContext, "No results.", Toast.LENGTH_LONG).show();
+//            throw new IllegalStateException("this should never happen as this should only be called with valid input");
+            // turns out it will happen when showing email result
         }
 
         // Pulling the relevant value from the cursor requires knowing the column index to pull
