@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /*
@@ -98,6 +100,19 @@ public class MainActivity extends AppCompatActivity {
         SearchView searchView =
                 (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setQuery(mSearchText, false);
+
+        /// http://stackoverflow.com/a/22316246/3667389
+        LinearLayout ll = (LinearLayout) searchView.getChildAt(0);
+        LinearLayout ll2 = (LinearLayout) ll.getChildAt(2);
+        LinearLayout ll3 = (LinearLayout) ll2.getChildAt(1);
+        SearchView.SearchAutoComplete autoComplete = (SearchView.SearchAutoComplete) ll3.getChildAt(0);
+        // set the hint text color
+        autoComplete.setHintTextColor(Color.WHITE);
+        // doesnt work for autocompletable part, so not using
+        //        autoComplete.setTextColor(Color.WHITE);
+        //        autoComplete.setLinkTextColor(Color.WHITE);
+        //        autoComplete.setHighlightColor(Color.WHITE);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
