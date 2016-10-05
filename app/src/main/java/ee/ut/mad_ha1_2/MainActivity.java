@@ -10,6 +10,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -51,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.selectedContact)).setText(savedInstanceState.getString(SELECTED_NAME));
         Log.v(TAG, "changing textview back to " + savedInstanceState.getString(SELECTED_NAME));
         mSearchText = savedInstanceState.getString(SEARCH_TEXT);
-
     }
 
     @Override
@@ -151,5 +151,11 @@ public class MainActivity extends AppCompatActivity {
                 setResult(Activity.RESULT_CANCELED);
             }
         }
+    }
+
+    public void clearSearch(MenuItem item) {
+        mSearchText = "";
+        SearchView searchView = (SearchView) findViewById(R.id.action_search);
+        searchView.setQuery("%", true);
     }
 }
